@@ -1,0 +1,11 @@
+# patch artifacts
+*.diff
+*.orig
+*.rej
+
+# build artifacts
+*.o
+/dwm
+
+# editor
+.vscode/
