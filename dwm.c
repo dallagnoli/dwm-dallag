@@ -1306,7 +1306,6 @@ movemouse(const Arg *arg)
 	Client *c;
 	Monitor *m;
 	XEvent ev;
-	Time lasttime = 0;
 
 	if (!(c = selmon->sel))
 		return;
@@ -1329,10 +1328,6 @@ movemouse(const Arg *arg)
 			handler[ev.type](&ev);
 			break;
 		case MotionNotify:
-			if ((ev.xmotion.time - lasttime) <= (1000 / refreshrate))
-				continue;
-			lasttime = ev.xmotion.time;
-
 			nx = ocx + (ev.xmotion.x - x);
 			ny = ocy + (ev.xmotion.y - y);
 			if (abs(selmon->wx - nx) < snap)
@@ -1374,7 +1369,6 @@ placemouse(const Arg *arg)
 	Monitor *m;
 	XEvent ev;
 	XWindowAttributes wa;
-	Time lasttime = 0;
 	int attachmode, prevattachmode;
 	attachmode = prevattachmode = -1;
 
@@ -1410,10 +1404,6 @@ placemouse(const Arg *arg)
 			handler[ev.type](&ev);
 			break;
 		case MotionNotify:
-			if ((ev.xmotion.time - lasttime) <= (1000 / 60))
-				continue;
-			lasttime = ev.xmotion.time;
-
 			nx = ocx + (ev.xmotion.x - x);
 			ny = ocy + (ev.xmotion.y - y);
 
@@ -1631,7 +1621,6 @@ resizemouse(const Arg *arg)
 	int horizcorner, vertcorner;
 	unsigned int dui;
 	Window dummy;
-	Time lasttime = 0;
 
 	if (!(c = selmon->sel))
 		return;
@@ -1658,10 +1647,6 @@ resizemouse(const Arg *arg)
 			handler[ev.type](&ev);
 			break;
 		case MotionNotify:
-			if ((ev.xmotion.time - lasttime) <= (1000 / refreshrate))
-				continue;
-			lasttime = ev.xmotion.time;
-
 			nx = horizcorner ? (ocx + ev.xmotion.x - opx) : c->x;
 			ny = vertcorner ? (ocy + ev.xmotion.y - opy) : c->y;
 			nw = MAX(horizcorner ? (ocx + ocw - nx) : (ocw + (ev.xmotion.x - opx)), 1);
